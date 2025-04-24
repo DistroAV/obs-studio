@@ -30,7 +30,7 @@ This is made here primarily for the DistroAV plugin.
 Other plugin can use it if they want following the proposed process below :
 
 Change the buildspec.json from the official upstream to this below:
-```
+`
         "obs-studio": {
             "version": "31.0.0-fix",
             "baseUrl": "https://github.com/distroav/obs-studio/archive/refs/tags",
@@ -39,7 +39,7 @@ Change the buildspec.json from the official upstream to this below:
                 "macos": "badf8839e65b00d74440d6f7dc2e48639717c6f3709c95be88214775dffde292",
                 "windows-x64": "1baf7fbf0bbb3769133572fe4f826c15bbccf498d4d6e2c7f75017c3612590fd"
             }
-```
+`
 
 Can also see the PR on the DistroAV plugin for reference :
 https://github.com/DistroAV/DistroAV/pull/1252
