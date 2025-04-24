@@ -1,72 +1,56 @@
 OBS Studio <https://obsproject.com>
 ===================================
 
-.. image:: https://github.com/obsproject/obs-studio/actions/workflows/push.yaml/badge.svg?branch=master
-   :alt: OBS Studio Build Status - GitHub Actions
-   :target: https://github.com/obsproject/obs-studio/actions/workflows/push.yaml?query=branch%3Amaster
+This REPO has a UNIQUE purpose :
 
-.. image:: https://badges.crowdin.net/obs-studio/localized.svg
-   :alt: OBS Studio Translation Project Progress
-   :target: https://crowdin.com/project/obs-studio
-
-.. image:: https://img.shields.io/discord/348973006581923840.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2
-   :alt: OBS Studio Discord Server
-   :target: https://obsproject.com/discord
-
-What is OBS Studio?
--------------------
-
-OBS Studio is software designed for capturing, compositing, encoding,
-recording, and streaming video content, efficiently.
-
-It's distributed under the GNU General Public License v2 (or any later
-version) - see the accompanying COPYING file for more details.
-
-Quick Links
------------
-
-- Website: https://obsproject.com
-
-- Help/Documentation/Guides: https://github.com/obsproject/obs-studio/wiki
-
-- Forums: https://obsproject.com/forum/
-
-- Build Instructions: https://github.com/obsproject/obs-studio/wiki/Install-Instructions
-
-- Developer/API Documentation: https://obsproject.com/docs
-
-- Donating/backing/sponsoring: https://obsproject.com/contribute
-
-- Bug Tracker: https://github.com/obsproject/obs-studio/issues
-
-Contributing
-------------
-
-- If you would like to help fund or sponsor the project, you can do so
-  via `Patreon <https://www.patreon.com/obsproject>`_, `OpenCollective
-  <https://opencollective.com/obsproject>`_, or `PayPal
-  <https://www.paypal.me/obsproject>`_.  See our `contribute page
-  <https://obsproject.com/contribute>`_ for more information.
-
-- If you wish to contribute code to the project, please make sure to
-  read the coding and commit guidelines:
-  https://github.com/obsproject/obs-studio/blob/master/CONTRIBUTING.rst
-
-- Developer/API documentation can be found here:
-  https://obsproject.com/docs
-
-- If you wish to contribute translations, do not submit pull requests.
-  Instead, please use Crowdin.  For more information read this page:
-  https://obsproject.com/wiki/How-To-Contribute-Translations-For-OBS
-
-- Other ways to contribute are by helping people out with support on
-  our forums or in our community chat.  Please limit support to topics
-  you fully understand -- bad advice is worse than no advice.  When it
-  comes to something that you don't fully know or understand, please
-  defer to the official help or official channels.
+Allow plugin release / support to continue until a new tag or release is provided on the official OBS Studio project.
 
 
-SAST Tools
-----------
+## The context & issue
+- cmake4 behavior changed for macOS SDK detection.
+- The fix is already on the obs-studio master branch but not available in any tagged commit or release (as os 31.0.3)
+Soruce : https://github.com/obsproject/obs-studio/pull/11893
 
-`PVS-Studio <https://pvs-studio.com/pvs-studio/?utm_source=website&utm_medium=github&utm_campaign=open_source>`_ - static analyzer for C, C++, C#, and Java code.
+- There seems to be no planned hotfix release on 31.0 branches planned.
+
+
+## What is this fork purpose?
+It was the most straight forward without modifying (and testing) the code in the plugin and then revert it back once a new tag is available (with the fix) .
+
+See the details at : https://github.com/DistroAV/DistroAV/pull/1252
+
+## What is 31.0.0-fix?
+It the 30.0.0 tagged release with the unique fix to allow for building MacOS (github action) 
+
+Nothing-else.
+
+
+## How to use it?
+This is made here primarily for the DistroAV plugin.
+Other plugin can use it if they want following the proposed process below :
+
+Change the buildspec.json from the official upstream to this below:
+```
+        "obs-studio": {
+            "version": "31.0.0-fix",
+            "baseUrl": "https://github.com/distroav/obs-studio/archive/refs/tags",
+            "label": "OBS sources",
+            "hashes": {
+                "macos": "badf8839e65b00d74440d6f7dc2e48639717c6f3709c95be88214775dffde292",
+                "windows-x64": "1baf7fbf0bbb3769133572fe4f826c15bbccf498d4d6e2c7f75017c3612590fd"
+            }
+```
+
+Can also see the PR on the DistroAV plugin for reference :
+https://github.com/DistroAV/DistroAV/pull/1252
+
+
+### Recommended Optional Steps in your plugin
+- Do this in a PR with a clear statement that this is temporary and MUST be reverted : see example at : https://github.com/DistroAV/DistroAV/pull/1252
+- Create an issue that this MUST be reverted as soon as there is a new OBS Source release / Tag (after 31.0.3) : See example at : https://github.com/DistroAV/DistroAV/issues/1253
+
+
+# IMPORTANT
+1. No support whatsoever on this will be provided
+2. As soon as the tag/release is done on OBS-studio (upstream) - The tags and this repo will be deprecated and ultimately removed.
+3. This does not fix your plugin code, and you might still have the cmake compiler error. Check this out if that is the case : https://github.com/obsproject/obs-plugintemplate/pull/145
