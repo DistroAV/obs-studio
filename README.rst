@@ -5,6 +5,11 @@ This REPO has a UNIQUE purpose :
 
 Allow plugin release / support to continue until a new tag or release is provided on the official OBS Studio project.
 
+# This fork will be phased-out soon
+
+If you used this repo, please update your buildspec.json as follow :
+https://github.com/obsproject/obs-plugintemplate/pull/149
+
 
 ## The context & issue
 - cmake4 behavior changed for macOS SDK detection.
@@ -23,7 +28,6 @@ See the details at : https://github.com/DistroAV/DistroAV/pull/1252
 It the 30.0.0 tagged release with the unique fix to allow for building MacOS (github action) 
 
 Nothing-else.
-
 
 ## How to use it?
 This is made here primarily for the DistroAV plugin.
